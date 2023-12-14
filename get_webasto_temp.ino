@@ -3,11 +3,11 @@
 
 THERMISTOR thermistor(exhaust_temp_pin,        // Analog pin
                       100000,          // Nominal resistance at 25 ºC
-                      4000,           // thermistor's beta coefficient
+                      3950,           // thermistor's beta coefficient
                       100000);         // Value of the series resistor
 THERMISTOR thermistor2(water_temp_pin,        // Analog pin
                       100000,          // Nominal resistance at 25 ºC
-                      4000,           // thermistor's beta coefficient
+                      3950,           // thermistor's beta coefficient
                       100000);         // Value of the series resistor
 
 float get_wabasto_temp(int temp_pin) { // read a sensor value, smoothen it a bit and convert it to C degrees

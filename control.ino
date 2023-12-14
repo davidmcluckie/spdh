@@ -9,7 +9,7 @@ void control() {
 
     if ((burn_mode<3) && (Start_Failures < 3)) //Don't start if shutting down or it has failed to start 3 times
     {
-      if(water_temp < heater_min)
+      if(water_temp*100 < (heater_min)*100)
       {
         burn = 1;
         heater_on = 1;

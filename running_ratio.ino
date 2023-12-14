@@ -33,7 +33,7 @@ float running_ratio(float exhaust_temp) {
     }
 
     
-    if(exhaust_temp>350) { //Just in case exhaust temp getting too high
+    if(exhaust_temp>500) { //Just in case exhaust temp getting too high
       fuel_target = throttling_idle_fuel*100;
       fan_target = throttling_idle_fan;
     }
@@ -54,7 +54,7 @@ float running_ratio(float exhaust_temp) {
         
         if(fuel_current<fuel_target) 
         {
-          if(millis() - fuel_change_timer >= 1500){  //Increase fuel slowly
+          if(millis() - fuel_change_timer >= 500){  //Increase fuel slowly
             fuel_need += 0.01;
             message = "T Inc Fuel";
             fuel_change_timer = millis();
@@ -82,7 +82,7 @@ float running_ratio(float exhaust_temp) {
         
         if(fan_speed<fan_target)
         {
-          if(millis() - fan_change_timer >= 1500) { //Increase fan slowly
+          if(millis() - fan_change_timer >= 500) { //Increase fan slowly
             fan_speed += 0.5;
             message = "T Inc Fan";
             EX_Mute = true;

@@ -48,7 +48,7 @@ static int cooled_off = 0;
     }
 
 #ifndef FLAME_SENSOR_ENABLE  //Flame sensor only indicates flame, not overheat
-    if ((exhaust_temp > 350) && (burn_mode != 3)) { // if overheating. Temp sometimes spikes as heater shuts down. This is not a fail.
+    if ((exhaust_temp > 550) && (burn_mode != 3)) { // if overheating. Temp sometimes spikes as heater shuts down. This is not a fail.
       message = "Exhaust Overheat";
       Serial.println("############## OVERHEAT ####################");
       ShutdownReason = "Overheat ";
@@ -83,10 +83,10 @@ static int cooled_off = 0;
 #ifdef FLAME_SENSOR_ENABLE
         if(exhaust_temp > flame_threshold && (cooled_off == 0 || seconds < 5)) 
 #else
-        if(exhaust_temp > 150 && (cooled_off == 0 || seconds < 5))
+        if(exhaust_temp > 75 && (cooled_off == 0 || seconds < 5))
 #endif
         {
-          message = "Cooling < 150";
+          message = "Cooling < 75";
           fan_speed = 80;
           fuel_need = 0;
           seconds = 0;
@@ -95,7 +95,7 @@ static int cooled_off = 0;
 #ifdef FLAME_SENSOR_ENABLE
         else if(exhaust_temp <= flame_threshold)
 #else
-        else if(exhaust_temp <= 150)
+        else if(exhaust_temp <= 75)
 #endif
           cooled_off = 1;
         
@@ -103,7 +103,7 @@ static int cooled_off = 0;
         {
           fan_speed = 70; //prime_fan_speed * 2;
           temp_init = exhaust_temp; // store the exhaust temperature before trying to start the fire
-          glow_time = 60;  //30 Sec was not long enough in cold weather
+          glow_time = 45;  //30 Sec was not long enough in cold weather
           fuel_need = 0;
           message = "Clearing Chamber";
         }
@@ -270,7 +270,7 @@ static int cooled_off = 0;
 #else
         if (seconds > 60 || exhaust_temp < flame_threshold) {
 #endif
-          fan_speed = 40;
+          fan_speed = 60;
           message = "Final-Cool";
           glow_time = 0;
           water_pump_speed = 100;
@@ -278,10 +278,10 @@ static int cooled_off = 0;
         } else {
           fan_speed = 60;
           message = "Purge-Cool";
-          glow_time = 30;
+          glow_time = 0;
           water_pump_speed = 100;          
         }
-        if (seconds>120) {  //Wait until exhaust cools below water temp
+        if (seconds>300) {  //Wait until exhaust cools below water temp
           burn_mode = 0;
           message = "Off";
           glow_time = 0;
